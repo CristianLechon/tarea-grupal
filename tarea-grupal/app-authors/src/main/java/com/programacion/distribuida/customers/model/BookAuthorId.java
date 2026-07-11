@@ -1,4 +1,4 @@
-package com.programacion.distribuida.model;
+package com.programacion.distribuida.customers.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

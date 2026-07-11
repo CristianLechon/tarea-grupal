@@ -1,8 +1,8 @@
-package com.programacion.distribuida.service;
+package com.programacion.distribuida.customers.service;
 
-import com.programacion.distribuida.dtos.AuthorDto;
-import com.programacion.distribuida.model.Author;
-import com.programacion.distribuida.repository.AuthorRepository;
+import com.programacion.distribuida.customers.dtos.AuthorDto;
+import com.programacion.distribuida.customers.model.Author;
+import com.programacion.distribuida.customers.repository.AuthorRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;

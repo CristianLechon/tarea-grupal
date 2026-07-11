@@ -1,15 +1,12 @@
-package com.programacion.distribuida.controller;
+package com.programacion.distribuida.customers.controller;
 
-import com.programacion.distribuida.dtos.AuthorDto;
-import com.programacion.distribuida.model.Author;
-import com.programacion.distribuida.service.AuthorService;
+import com.programacion.distribuida.customers.dtos.AuthorDto;
+import com.programacion.distribuida.customers.service.AuthorService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-
-import java.util.List;
 
 @Path("/authors")
 @Produces(MediaType.APPLICATION_JSON)

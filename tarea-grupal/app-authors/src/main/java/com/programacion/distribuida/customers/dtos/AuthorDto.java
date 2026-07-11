@@ -1,4 +1,4 @@
-package com.programacion.distribuida.dtos;
+package com.programacion.distribuida.customers.dtos;
 
 import lombok.*;
 
