@@ -1,0 +1,15 @@
+package com.programacion.distribuida.model;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import lombok.Getter;
+import lombok.Setter;
+
+@Embeddable
+@Getter @Setter
+public class BookAuthorId {
+    @Column(name = "books_isbn")
+    private String isbn;
+    @Column(name = "authors_id")
+    private Integer authorId;
+}
