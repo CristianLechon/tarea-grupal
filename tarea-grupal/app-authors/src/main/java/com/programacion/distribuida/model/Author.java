@@ -1,4 +1,4 @@
-package com.programacion.distribuida.db;
+package com.programacion.distribuida.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -14,4 +14,7 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    private String name;
+    private Integer version;
 }
