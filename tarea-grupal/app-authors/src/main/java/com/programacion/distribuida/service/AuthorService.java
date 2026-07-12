@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @ApplicationScoped
 @Transactional
@@ -18,38 +19,54 @@ public class AuthorService {
     @Inject
     private AuthorRepository authorRepository;
 
+    AtomicInteger counter = new AtomicInteger(1);
+
     public List<AuthorDto> listarTodos() {
         List<AuthorDto> lista = new ArrayList<>();
-        for (Author author: this.authorRepository.listAll()){
+        for (Author author : this.authorRepository.listAll()) {
             lista.add(this.mapperToAuthorDto(author));
         }
         return lista;
     }
 
     public Optional<AuthorDto> buscarPorId(Integer id) {
-        return Optional.of(this.mapperToAuthorDto(this.authorRepository.findById(id)));
+        return Optional.ofNullable(this.authorRepository.findById(id))
+                .map(author -> this.mapperToAuthorDto(author));
     }
 
     public List<AuthorDto> findByBook(String isbn) {
+        /*int val = counter.getAndIncrement();
+        if (val % 5 != 0) {
+            String msg = String.format("Intento %d generando error", val);
+            System.out.println(msg);
+            throw new RuntimeException(msg);
+        }*/
         List<AuthorDto> lista = new ArrayList<>();
         for (Author author : this.authorRepository.findByBook(isbn)) {
             lista.add(this.mapperToAuthorDto(author));
         }
-        return lista;
+        return lista.isEmpty() ? null : lista;
     }
 
     public void crear(AuthorDto authorDto) {
         this.authorRepository.persist(this.mapperToAuthor(authorDto));
     }
 
-    public void actualizar(Integer id, AuthorDto authorDto) {
-        Author author = this.authorRepository.findById(id);
-        author.setName(authorDto.getName());
-        author.setVersion(authorDto.getVersion());
+    public Optional<AuthorDto> actualizar(Integer id, AuthorDto authorDto) {
+        return Optional.ofNullable(this.authorRepository.findById(id))
+                .map(author -> {
+                    author.setName(authorDto.getName());
+                    author.setVersion(authorDto.getVersion());
+                    return this.mapperToAuthorDto(author);
+                });
     }
 
-    public void eliminar(Integer id) {
-        this.authorRepository.deleteById(id);
+    public Optional<Boolean> eliminar(Integer id) {
+        return Optional.ofNullable(this.authorRepository.findById(id))
+                .map(author -> {
+                    this.authorRepository.deleteById(id);
+                    return true;
+                });
     }
 
     private AuthorDto mapperToAuthorDto(Author author) {

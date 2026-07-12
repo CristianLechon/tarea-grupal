@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-authors
+  namespace: books-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-authors
+  template:
+    metadata:
+      labels:
+        app: app-authors
+    spec:
+      containers:
+        - name: app-authors
+          image: xd456/app-authors:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: QUARKUS_DATASOURCE_JDBC_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: books-config
+                  key: QUARKUS_DATASOURCE_JDBC_URL
+            - name: QUARKUS_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: books-secret
+                  key: QUARKUS_DATASOURCE_USERNAME
+            - name: QUARKUS_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: books-secret
+                  key: QUARKUS_DATASOURCE_PASSWORD
+            - name: QUARKUS_HTTP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: books-config
+                  key: QUARKUS_HTTP_PORT
+            - name: CONSUL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: books-config
+                  key: CONSUL_HOST
+            - name: CONSUL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: books-config
+                  key: CONSUL_PORT
+            - name: QUARKUS_FLYWAY_MIGRATE_AT_START
+              valueFrom:
+                configMapKeyRef:
+                  name: books-config
+                  key: QUARKUS_FLYWAY_MIGRATE_AT_START
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-authors
+spec:
+  type: ClusterIP
+  selector:
+    app: app-authors
+  ports:
+    - port: 8080
+      targetPort: 8080
+      

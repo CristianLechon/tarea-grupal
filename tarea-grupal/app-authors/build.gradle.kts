@@ -39,6 +39,11 @@ dependencies {
     implementation("io.quarkus:quarkus-smallrye-stork")
     // Vert.x ConsulClient programático
     implementation("io.smallrye.reactive:smallrye-mutiny-vertx-consul-client")
+    // MicroProfile Health
+    implementation("io.quarkus:quarkus-smallrye-health")
+    // Telemetria
+    implementation("io.quarkus:quarkus-micrometer-registry-prometheus")
+
 
 
 }
