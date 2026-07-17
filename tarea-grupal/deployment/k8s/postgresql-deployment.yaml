@@ -34,7 +34,7 @@ spec:
             - name: POSTGRES_USER
               value: "postgres"
             - name: POSTGRES_PASSWORD
-              value: "7720"
+              value: "postgres"
             - name: POSTGRES_DB
               value: "books-db"
             - name: "PGDATA"
