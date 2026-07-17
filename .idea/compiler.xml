@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.42/8365263844ebb62398e0dc33057ba10ba472d3b8/lombok-1.18.42.jar" />
+        </processorPath>
+        <module name="tarea-grupal.app-authors.quarkus-test-generated-sources" />
+        <module name="tarea-grupal.app-authors.integrationTest" />
+        <module name="tarea-grupal.app-books.main" />
+        <module name="tarea-grupal.app-authors.main" />
+        <module name="tarea-grupal.app-books.integrationTest" />
+        <module name="tarea-grupal.app-books.quarkus-test-generated-sources" />
+        <module name="tarea-grupal.app-authors.test" />
+        <module name="tarea-grupal.app-authors.quarkus-generated-sources" />
+        <module name="tarea-grupal.app-authors.native-test" />
+        <module name="tarea-grupal.app-books.native-test" />
+        <module name="tarea-grupal.app-books.quarkus-generated-sources" />
+        <module name="tarea-grupal.app-books.test" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="tarea-grupal.app-authors" options="-Xlint:-processing -parameters" />
+      <module name="tarea-grupal.app-authors.integrationTest" options="-Xlint:-processing -parameters" />
+      <module name="tarea-grupal.app-authors.main" options="-Xlint:-processing -parameters" />
+      <module name="tarea-grupal.app-authors.native-test" options="-Xlint:-processing -parameters" />
+      <module name="tarea-grupal.app-authors.quarkus-generated-sources" options="-Xlint:-processing -parameters" />
+      <module name="tarea-grupal.app-authors.quarkus-test-generated-sources" options="-Xlint:-processing -parameters" />
+      <module name="tarea-grupal.app-authors.test" options="-Xlint:-processing -parameters" />
+      <module name="tarea-grupal.app-books" options="-Xlint:-processing" />
+      <module name="tarea-grupal.app-books.integrationTest" options="-Xlint:-processing" />
+      <module name="tarea-grupal.app-books.main" options="-Xlint:-processing" />
+      <module name="tarea-grupal.app-books.native-test" options="-Xlint:-processing" />
+      <module name="tarea-grupal.app-books.quarkus-generated-sources" options="-Xlint:-processing" />
+      <module name="tarea-grupal.app-books.quarkus-test-generated-sources" options="-Xlint:-processing" />
+      <module name="tarea-grupal.app-books.test" options="-Xlint:-processing" />
+    </option>
+  </component>
+</project>

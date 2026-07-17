@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/tarea-grupal.iml" filepath="$PROJECT_DIR$/.idea/tarea-grupal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app-books/tarea-grupal.app-books.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app-books/tarea-grupal.app-books.main.iml" />
+    </modules>
+  </component>
+</project>
