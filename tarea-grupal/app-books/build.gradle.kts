@@ -43,6 +43,7 @@ dependencies {
 
     // Telemetria
     implementation("io.quarkus:quarkus-micrometer-registry-prometheus")
+    implementation("io.quarkus:quarkus-opentelemetry")
 
     // Health Checks y Métricas
     implementation("io.quarkus:quarkus-smallrye-health")

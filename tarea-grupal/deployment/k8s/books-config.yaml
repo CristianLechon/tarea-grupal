@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: books-config
-  namespace: books-app
+  #namespace: books-app
 data:
   QUARKUS_DATASOURCE_JDBC_URL: "jdbc:postgresql://postgres:5432/books-db"
   SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/books-db"
@@ -11,3 +11,4 @@ data:
   CONSUL_HOST: "consul"
   CONSUL_PORT: "8500"
   QUARKUS_FLYWAY_MIGRATE_AT_START: "true"
+  OTLP_ENDPOINT: "http://jaeger:4318/v1/traces"
