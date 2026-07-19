@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-authors
+  name: app-books
   namespace: books-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: app-authors
+      app: app-books
   template:
     metadata:
       labels:
-        app: app-authors
+        app: app-books
     spec:
       containers:
-        - name: app-authors
-          image: xd456/app-authors:latest
+        - name: app-books
+          image: xd456/app-books:latest
           ports:
             - containerPort: 8080
           env:
@@ -49,11 +49,6 @@ spec:
                 configMapKeyRef:
                   name: books-config
                   key: CONSUL_PORT
-            - name: QUARKUS_FLYWAY_MIGRATE_AT_START
-              valueFrom:
-                configMapKeyRef:
-                  name: books-config
-                  key: QUARKUS_FLYWAY_MIGRATE_AT_START
           resources:
             requests:
               memory: "512Mi"
@@ -62,13 +57,15 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: app-authors
+  name: app-books
   namespace: books-app
 spec:
   type: ClusterIP
   selector:
-    app: app-authors
+    app: app-books
   ports:
     - port: 8080
       targetPort: 8080
+
+
       

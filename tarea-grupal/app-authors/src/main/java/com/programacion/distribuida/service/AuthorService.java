@@ -45,7 +45,7 @@ public class AuthorService {
         for (Author author : this.authorRepository.findByBook(isbn)) {
             lista.add(this.mapperToAuthorDto(author));
         }
-        return lista.isEmpty() ? null : lista;
+        return lista;
     }
 
     public void crear(AuthorDto authorDto) {
