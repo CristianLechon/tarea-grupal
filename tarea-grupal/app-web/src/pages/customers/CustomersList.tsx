@@ -1,20 +1,23 @@
 import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useCustomerStore } from '../../store/useCustomerStore';
-import { Plus, Edit2, Trash2 } from 'lucide-react';
+import { Plus, Edit2, Trash2, Eye } from 'lucide-react';
 import { Modal } from '../../components/ui/Modal';
+import modalStyles from '../../components/ui/Modal.module.css';
+import styles from '../shared/PageStyles.module.css';
 import type { Customer } from '../../types/Customer';
 import toast from 'react-hot-toast';
 
 export const CustomersList = () => {
   const { customers, loading, fetchCustomers, createCustomer, updateCustomer, deleteCustomer } = useCustomerStore();
+  const navigate = useNavigate();
   
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [editingCustomer, setEditingCustomer] = useState<Customer | null>(null);
   const [customerToDelete, setCustomerToDelete] = useState<Customer | null>(null);
 
-  // Form State
   const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', phone: '', address: '' });
 
   useEffect(() => {
@@ -52,7 +55,6 @@ export const CustomersList = () => {
       }
       handleCloseModal();
     } catch (error) {
-      // Error manejado por el interceptor
     }
   };
 
@@ -63,31 +65,30 @@ export const CustomersList = () => {
         toast.success('Cliente eliminado con éxito');
         setIsDeleteModalOpen(false);
       } catch (error) {
-        // Error manejado
       }
     }
   };
 
   if (loading && customers.length === 0) {
     return (
-      <div className="spinner-wrapper">
-        <div className="spinner"></div>
+      <div className={styles.spinnerWrapper}>
+        <div className={styles.spinner}></div>
       </div>
     );
   }
 
   return (
     <div>
-      <div className="page-header">
-        <h1 className="page-title">Clientes</h1>
-        <button className="btn btn-primary" onClick={() => handleOpenModal()}>
+      <div className={styles.pageHeader}>
+        <h1 className={styles.pageTitle}>Clientes</h1>
+        <button className={`${styles.btn} ${styles.btnPrimary}`} onClick={() => handleOpenModal()}>
           <Plus size={18} /> Añadir Cliente
         </button>
       </div>
 
-      <div className="card">
-        <div className="table-wrapper">
-          <table className="table">
+      <div className={styles.card}>
+        <div className={styles.tableWrapper}>
+          <table className={styles.table}>
             <thead>
               <tr>
                 <th>ID</th>
@@ -107,12 +108,15 @@ export const CustomersList = () => {
                   <td>{customer.phone || '-'}</td>
                   <td>{customer.address || '-'}</td>
                   <td>
-                    <div className="actions">
-                      <button className="btn btn-ghost" onClick={() => handleOpenModal(customer)}>
+                    <div className={styles.actions}>
+                      <button className={`${styles.btn} ${styles.btnGhost}`} onClick={() => navigate(`/customers/${customer.id}`)}>
+                        <Eye size={16} />
+                      </button>
+                      <button className={`${styles.btn} ${styles.btnGhost}`} onClick={() => handleOpenModal(customer)}>
                         <Edit2 size={16} />
                       </button>
                       <button 
-                        className="btn btn-ghost" 
+                        className={`${styles.btn} ${styles.btnGhost}`}
                         style={{ color: 'var(--danger)' }}
                         onClick={() => {
                           setCustomerToDelete(customer);
@@ -137,70 +141,68 @@ export const CustomersList = () => {
         </div>
       </div>
 
-      {/* Create / Edit Modal */}
       <Modal isOpen={isModalOpen} onClose={handleCloseModal} title={editingCustomer ? 'Editar Cliente' : 'Nuevo Cliente'}>
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label className="form-label">Nombre</label>
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>Nombre</label>
             <input 
               required
-              className="form-input"
+              className={styles.formInput}
               value={formData.firstName}
               onChange={(e) => setFormData({...formData, firstName: e.target.value})}
             />
           </div>
-          <div className="form-group">
-            <label className="form-label">Apellido</label>
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>Apellido</label>
             <input 
               required
-              className="form-input"
+              className={styles.formInput}
               value={formData.lastName}
               onChange={(e) => setFormData({...formData, lastName: e.target.value})}
             />
           </div>
-          <div className="form-group">
-            <label className="form-label">Correo Electrónico</label>
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>Correo Electrónico</label>
             <input 
               required
               type="email"
-              className="form-input"
+              className={styles.formInput}
               value={formData.email}
               onChange={(e) => setFormData({...formData, email: e.target.value})}
             />
           </div>
-          <div className="form-group">
-            <label className="form-label">Teléfono</label>
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>Teléfono</label>
             <input 
               type="tel"
-              className="form-input"
+              className={styles.formInput}
               value={formData.phone}
               onChange={(e) => setFormData({...formData, phone: e.target.value})}
             />
           </div>
-          <div className="form-group">
-            <label className="form-label">Dirección</label>
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>Dirección</label>
             <input 
               type="text"
-              className="form-input"
+              className={styles.formInput}
               value={formData.address}
               onChange={(e) => setFormData({...formData, address: e.target.value})}
             />
           </div>
-          <div className="modal-footer">
-            <button type="button" className="btn btn-ghost" onClick={handleCloseModal}>Cancelar</button>
-            <button type="submit" className="btn btn-primary" disabled={loading}>
+          <div className={modalStyles.modalFooter}>
+            <button type="button" className={`${styles.btn} ${styles.btnGhost}`} onClick={handleCloseModal}>Cancelar</button>
+            <button type="submit" className={`${styles.btn} ${styles.btnPrimary}`} disabled={loading}>
               {loading ? 'Guardando...' : 'Guardar'}
             </button>
           </div>
         </form>
       </Modal>
 
-      {/* Delete Confirmation Modal */}
       <Modal isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)} title="Confirmar Eliminación">
         <p>¿Estás seguro que deseas eliminar a {customerToDelete?.firstName} {customerToDelete?.lastName}? Esta acción no se puede deshacer.</p>
-        <div className="modal-footer">
-          <button className="btn btn-ghost" onClick={() => setIsDeleteModalOpen(false)}>Cancelar</button>
-          <button className="btn btn-danger" onClick={confirmDelete} disabled={loading}>
+        <div className={modalStyles.modalFooter}>
+          <button className={`${styles.btn} ${styles.btnGhost}`} onClick={() => setIsDeleteModalOpen(false)}>Cancelar</button>
+          <button className={`${styles.btn} ${styles.btnDanger}`} onClick={confirmDelete} disabled={loading}>
             {loading ? 'Eliminando...' : 'Eliminar'}
           </button>
         </div>

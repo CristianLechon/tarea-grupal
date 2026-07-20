@@ -19,9 +19,9 @@ java {
 }
 dependencies {
     implementation(enforcedPlatform("io.quarkus.platform:quarkus-bom:${quarkusVersion}"))
-    //CDI
+    // CDI
     implementation("io.quarkus:quarkus-arc")
-    //REST
+    // REST
     implementation("io.quarkus:quarkus-rest")
     implementation("io.quarkus:quarkus-rest-jsonb")
 
@@ -29,14 +29,13 @@ dependencies {
     implementation("io.quarkus:quarkus-hibernate-orm-panache")
     implementation("io.quarkus:quarkus-jdbc-postgresql")
 
-    //-- Rest Client
+    // Rest Client
     implementation("io.quarkus:quarkus-rest-client-jsonb")
     implementation("io.quarkus:quarkus-rest-client")
 
-    //-- Services Discovery
+    // Services Discovery
     implementation("io.quarkus:quarkus-smallrye-stork")
     implementation("io.smallrye.reactive:smallrye-mutiny-vertx-consul-client")
-    //implementation("io.smallrye.stork:stork-service-discovery-static-list")
     implementation("io.smallrye.stork:stork-service-discovery-consul")
 
     implementation("io.quarkus:quarkus-smallrye-fault-tolerance")
@@ -48,6 +47,8 @@ dependencies {
     implementation("io.quarkus:quarkus-smallrye-health")
 
     implementation("io.quarkus:quarkus-jackson")
+
+    implementation("io.quarkus:quarkus-opentelemetry")
 
 }
 

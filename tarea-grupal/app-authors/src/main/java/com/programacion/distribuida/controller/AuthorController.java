@@ -66,7 +66,7 @@ public class AuthorController {
     @Path("/{id}")
     public Response eliminar(@PathParam("id") Integer id) {
         return this.authorService.eliminar(id)
-                .map(Response::ok)
+                .map(author -> Response.noContent())
                 .orElse(Response.status(Response.Status.NOT_FOUND))
                 .build();
     }

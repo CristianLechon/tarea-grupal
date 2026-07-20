@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app-authors
-  namespace: books-app
+  namespace: calechon-dev
 spec:
   replicas: 1
   selector:
@@ -16,8 +16,21 @@ spec:
       containers:
         - name: app-authors
           image: xd456/app-authors:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /q/health/live
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /q/health/ready
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
           env:
             - name: QUARKUS_DATASOURCE_JDBC_URL
               valueFrom:
@@ -54,6 +67,10 @@ spec:
                 configMapKeyRef:
                   name: books-config
                   key: QUARKUS_FLYWAY_MIGRATE_AT_START
+            - name: APP_NAME
+              value: "app-authors"
+            - name: QUARKUS_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+              value: "http://jaeger:4317"
           resources:
             requests:
               memory: "512Mi"
@@ -63,7 +80,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: app-authors
-  namespace: books-app
+  namespace: calechon-dev
 spec:
   type: ClusterIP
   selector:

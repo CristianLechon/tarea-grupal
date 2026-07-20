@@ -1,0 +1,57 @@
+.appLayout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebarBrand {
+  padding: 24px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidebarNav {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  gap: 8px;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.navItem:hover, .navItem.active {
+  background: var(--surface-hover);
+  color: var(--text-main);
+}
+
+.navItem.active {
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--primary);
+}
+
+.mainContent {
+  flex: 1;
+  padding: 32px;
+  overflow-y: auto;
+}

@@ -36,6 +36,10 @@ dependencies {
     // Prometheus
     implementation("io.micrometer:micrometer-registry-prometheus")
 
+    //Jaeger
+    implementation("io.micrometer:micrometer-tracing-bridge-otel")
+    implementation("io.opentelemetry:opentelemetry-exporter-otlp")
+
     // PostgreSQL
     runtimeOnly("org.postgresql:postgresql")
 }

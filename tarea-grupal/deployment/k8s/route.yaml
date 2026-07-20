@@ -1,0 +1,38 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: api-gateway-route
+  namespace: calechon-dev
+  labels:
+    app: traefik
+spec:
+  to:
+    kind: Service
+    name: traefik
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
+
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: app-web-route
+  namespace: calechon-dev
+  labels:
+    app: app-web
+spec:
+  to:
+    kind: Service
+    name: app-web
+    weight: 100
+  port:
+    targetPort: 8080
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

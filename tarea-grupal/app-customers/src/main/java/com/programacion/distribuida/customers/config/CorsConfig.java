@@ -12,7 +12,7 @@ public class CorsConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOriginPatterns(
                         "http://localhost:5173",
-                        "url de Openshift"
+                        "https://app-web-route-calechon-dev.apps.rm2.thpm.p1.openshiftapps.com/"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*");

@@ -1,0 +1,62 @@
+server:
+  port: ${SERVER_PORT:8090}
+
+spring:
+  application:
+    name: app-customers
+
+  # DB
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/books}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+
+  sql:
+    init:
+      mode: always
+  jpa:
+    hibernate:
+      ddl-auto: none
+    defer-datasource-initialization: true
+
+  # Consul
+  cloud:
+    consul:
+      host: ${CONSUL_HOST:127.0.0.1}
+      port: ${CONSUL_PORT:8500}
+      discovery:
+        hostname: ${spring.cloud.client.ip-address}
+        service-name: app-customers
+        instance-id: ${spring.application.name}-${spring.cloud.client.ip-address}:${server.port}
+        prefer-ip-address: true
+        health-check-path: /actuator/health
+        health-check-interval: 10s
+        tags:
+          - framework=springboot-4.0.6
+          - traefik.enable=true
+          - traefik.http.routers.customers.rule=PathPrefix(`/app-customers`)
+          - traefik.http.middlewares.customers-stripprefix.stripprefix.prefixes=/app-customers
+          - traefik.http.routers.customers.middlewares=customers-stripprefix
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: always
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+
+  tracing:
+    sampling:
+      probability: 1.0
+    otlp:
+      tracing:
+        endpoint: ${MANAGEMENT_OTLP_TRACING_ENDPOINT:http://localhost:4318/v1/traces}

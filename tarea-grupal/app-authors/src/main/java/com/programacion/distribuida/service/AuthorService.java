@@ -35,12 +35,12 @@ public class AuthorService {
     }
 
     public List<AuthorDto> findByBook(String isbn) {
-        /*int val = counter.getAndIncrement();
+        int val = counter.getAndIncrement();
         if (val % 5 != 0) {
             String msg = String.format("Intento %d generando error", val);
             System.out.println(msg);
             throw new RuntimeException(msg);
-        }*/
+        }
         List<AuthorDto> lista = new ArrayList<>();
         for (Author author : this.authorRepository.findByBook(isbn)) {
             lista.add(this.mapperToAuthorDto(author));

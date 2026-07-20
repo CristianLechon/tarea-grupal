@@ -1,7 +1,7 @@
 # -- Crear la imagen
-# docker build -f src/main/docker/Dockerfile.jvm -t xd456/app-authors .
+# docker build -f src/main/docker/Dockerfile.jvm -t xd456/app-customers .
 # docker login
-# docker push xd456/app-authors
+# docker push xd456/app-customers
 # docker logout
 #
 

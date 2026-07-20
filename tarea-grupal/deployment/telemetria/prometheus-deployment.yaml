@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: prometheus
-  namespace: books-app
+  namespace: calechon-dev
 spec:
   replicas: 1
   selector:
@@ -24,16 +24,20 @@ spec:
           volumeMounts:
             - name: config-volume
               mountPath: /etc/prometheus
+            - name: data-volume
+              mountPath: /prometheus
       volumes:
         - name: config-volume
           configMap:
             name: prometheus-config
+        - name: data-volume
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: prometheus
-  namespace: books-app
+  namespace: calechon-dev
 spec:
   type: ClusterIP
   ports:

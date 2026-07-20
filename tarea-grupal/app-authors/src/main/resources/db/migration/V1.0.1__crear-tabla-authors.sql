@@ -7,5 +7,8 @@ CREATE TABLE authors
 );
 
 insert into authors (name, version) values ('J.K. Rowling',1);
-insert into authors (name, version) values ('George R.R. Martin',2);
-insert into authors (name, version) values ('J.R.R. Tolkien',3);
+insert into authors (name, version) values ('George R.R. Martin',1);
+insert into authors (name, version) values ('J.R.R. Tolkien',1);
+insert into authors (name, version) values ('Gabriel García Márquez',1);
+insert into authors (name, version) values ('Stephen King',1);
+insert into authors (name, version) values ('Isaac Asimov',1);
