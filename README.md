@@ -82,7 +82,7 @@ flowchart TD
 
 ## 3. Tabla de Endpoints
 
-### 3.1 `app-authors` (Quarkus — Puerto local: 8070)
+### 3.1 `app-authors` (Quarkus — Puerto local: 8070, url OpenShift: https://api-gateway-route-calechon-dev.apps.rm2.thpm.p1.openshiftapps.com/app-authors)
 
 | Método | Ruta | Código OK | Descripción |
 |---|---|---|---|
@@ -95,7 +95,7 @@ flowchart TD
 
 ---
 
-### 3.2 `app-books` (Quarkus — Puerto local: 8080)
+### 3.2 `app-books` (Quarkus — Puerto local: 8080, url OpenShift: https://api-gateway-route-calechon-dev.apps.rm2.thpm.p1.openshiftapps.com/app-books)
 
 | Método | Ruta | Código OK | Descripción |
 |---|---|---|---|
@@ -107,7 +107,7 @@ flowchart TD
 
 ---
 
-### 3.3 `app-customers` (Spring Boot — Puerto local: 8090)
+### 3.3 `app-customers` (Spring Boot — Puerto local: 8090, url OpenShift: https://api-gateway-route-calechon-dev.apps.rm2.thpm.p1.openshiftapps.com/app-customers)
 
 | Método | Ruta | Código OK | Descripción |
 |---|---|---|---|
@@ -383,25 +383,30 @@ Prometheus realiza scraping a los siguientes objetivos definidos en `prometheus-
 
 ## 9. Capturas de Pantalla
 
-> *Nota: Adjuntar las imágenes correspondientes en la carpeta `docs/screenshots/` o sustituir las referencias a continuación.*
-
 1. **Consul Service Discovery Dashboard** (Servicios `app-authors`, `app-books`, `app-customers` registrados):
-   ![Consul Dashboard](docs/screenshots/consul-dashboard.png)
+   ![Consul Dashboard](capturas/Dashboard.png)
 
 2. **Frontend React (`app-web`)** (Página principal con métricas y tablas CRUD):
-   ![App Web Dashboard](docs/screenshots/app-web-dashboard.png)
+   ![App Web Dashboard](capturas/captura_web_authors.png)
+   ![App Web Dashboard](capturas/captura_web_books.png)
+   ![App Web Dashboard](capturas/captura_web_customers.png)
 
 3. **Traefik API Gateway Dashboard**:
-   ![Traefik Dashboard](docs/screenshots/traefik-dashboard.png)
+   ![Traefik Dashboard](capturas/traefik.png)
 
 4. **Prometheus Targets** (Todos los servicios backend en estado UP):
-   ![Prometheus Targets](docs/screenshots/prometheus-targets.png)
+   ![Prometheus Targets](capturas/prometheus.png)
 
 5. **Health Check Quarkus (`app-authors` / `app-books`)**:
-   ![Health Check Quarkus](docs/screenshots/health-quarkus.png)
+   ![Health Check Quarkus](capturas/captura_health_live_authors.png)
+   ![Health Check Quarkus](capturas/captura_health_live_books.png)
+
 
 6. **Health Check Spring Boot Actuator (`app-customers`)**:
-   ![Health Check Spring Boot](docs/screenshots/health-spring.png)
+   ![Health Check Spring Boot](capturas/captura_health_customers.png)
+
+7. **Jeager (`UI`)**:
+   ![Jeager UI ](capturas/captura_jaeger.png)
 
 ---
 
