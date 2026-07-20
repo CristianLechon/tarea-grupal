@@ -133,7 +133,7 @@ flowchart TD
 
 ## 5. Instrucciones de Ejecución
 
-### 5.1 Ejecución Local con Docker Compose
+### 5.1 Ejecución local con Docker Compose
 
 ```bash
 # Navegar a la carpeta que contiene el archivo de despliegue docker-compose
@@ -151,7 +151,7 @@ docker-compose down
 
 ---
 
-### 5.2 Despliegue en Minikube (Kubernetes Local)
+### 5.2 Despliegue local con Kubernetes (Minikube) 
 
 ```bash
 # 1. Iniciar Minikube
@@ -192,19 +192,18 @@ minikube service traefik-service -n books-app --url
 ### 5.3 Despliegue en OpenShift Developer Sandbox
 
 ```bash
-# Esta guía toma en cuenta que ya existe una sesión iniciada y activa de oc
-# No se incluirá el comando para crear el proyecto/namespace dado que la cuenta activa
-# que poseemos en OpenShift no nos permite crear ningun proyecto nuevo.
+# Esta guía toma en cuenta que ya existe una sesión iniciada y activa de oc.
+# No se incluirá el comando para crear el proyecto/namespace dado que la cuenta que poseemos en OpenShift no nos permite crear un proyecto nuevo.
+# SE INCLUYE EL ARCHIVO DE NAMESPACE Y SE MENCIONA EL MISMO EN TODOS LOS DEMAS ARCHIVOS DE DESPLIEGUE, A PETICION DE LA RUBRICA. SI SE VAN A USAR, NO SE DEBE DESPLEGAR EL NAMESPACE Y SE DEBE COMENTAR TODA MENCION AL MISMO.
 
 # 1. Configuraciones y secretos
 oc apply -f k8s/books-config.yaml
 oc apply -f k8s/books-secret.yaml
 
-# 2. Levantar toda la telemetría de golpe
+# 2. Desplegar toda la telemetría
 oc apply -f telemetria/
 
-# 3. Levantar el resto de la carpeta k8s
-# (OpenShift reiniciará cualquier pod que se haya iniciado antes de tiempo)
+# 3. Desplegar el resto de servicios en la carpeta k8s
 oc apply -f k8s/
 ```
 
