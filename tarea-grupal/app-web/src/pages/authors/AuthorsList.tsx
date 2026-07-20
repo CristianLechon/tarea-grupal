@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuthorStore } from '../../store/useAuthorStore';
-import { Plus, Edit2, Trash2 } from 'lucide-react';
+import { Plus, Edit2, Trash2, Eye } from 'lucide-react';
 import { Modal } from '../../components/ui/Modal';
+import modalStyles from '../../components/ui/Modal.module.css';
+import styles from '../shared/PageStyles.module.css';
 import type { Author } from '../../types/Author';
 import toast from 'react-hot-toast';
 
 export const AuthorsList = () => {
   const { authors, loading, fetchAuthors, createAuthor, updateAuthor, deleteAuthor } = useAuthorStore();
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [editingAuthor, setEditingAuthor] = useState<Author | null>(null);
@@ -45,7 +49,6 @@ export const AuthorsList = () => {
       }
       handleCloseModal();
     } catch (error) {
-      // Error manejado por el interceptor
     }
   };
 
@@ -56,31 +59,30 @@ export const AuthorsList = () => {
         toast.success('Autor eliminado con éxito');
         setIsDeleteModalOpen(false);
       } catch (error) {
-        // Error manejado
       }
     }
   };
 
   if (loading && authors.length === 0) {
     return (
-      <div className="spinner-wrapper">
-        <div className="spinner"></div>
+      <div className={styles.spinnerWrapper}>
+        <div className={styles.spinner}></div>
       </div>
     );
   }
 
   return (
     <div>
-      <div className="page-header">
-        <h1 className="page-title">Autores</h1>
-        <button className="btn btn-primary" onClick={() => handleOpenModal()}>
+      <div className={styles.pageHeader}>
+        <h1 className={styles.pageTitle}>Autores</h1>
+        <button className={`${styles.btn} ${styles.btnPrimary}`} onClick={() => handleOpenModal()}>
           <Plus size={18} /> Añadir Autor
         </button>
       </div>
 
-      <div className="card">
-        <div className="table-wrapper">
-          <table className="table">
+      <div className={styles.card}>
+        <div className={styles.tableWrapper}>
+          <table className={styles.table}>
             <thead>
               <tr>
                 <th>ID</th>
@@ -96,12 +98,15 @@ export const AuthorsList = () => {
                   <td>{author.name}</td>
                   <td>{author.version}</td>
                   <td>
-                    <div className="actions">
-                      <button className="btn btn-ghost" onClick={() => handleOpenModal(author)}>
+                    <div className={styles.actions}>
+                      <button className={`${styles.btn} ${styles.btnGhost}`} onClick={() => navigate(`/authors/${author.id}`)}>
+                        <Eye size={16} />
+                      </button>
+                      <button className={`${styles.btn} ${styles.btnGhost}`} onClick={() => handleOpenModal(author)}>
                         <Edit2 size={16} />
                       </button>
                       <button 
-                        className="btn btn-ghost" 
+                        className={`${styles.btn} ${styles.btnGhost}`}
                         style={{ color: 'var(--danger)' }}
                         onClick={() => {
                           setAuthorToDelete(author);
@@ -126,31 +131,30 @@ export const AuthorsList = () => {
         </div>
       </div>
 
-      {/* Create / Edit Modal */}
       <Modal isOpen={isModalOpen} onClose={handleCloseModal} title={editingAuthor ? 'Editar Autor' : 'Nuevo Autor'}>
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label className="form-label">Nombre</label>
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>Nombre</label>
             <input 
               required
-              className="form-input"
+              className={styles.formInput}
               value={formData.name}
               onChange={(e) => setFormData({...formData, name: e.target.value})}
             />
           </div>
-          <div className="form-group">
-            <label className="form-label">Versión</label>
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>Versión</label>
             <input
                 type="number"
                 min="0"
-                className="form-input"
+                className={styles.formInput}
                 value={formData.version}
                 onChange={(e) => setFormData({...formData, version: Math.max(0, parseInt(e.target.value) || 0)})}
             />
           </div>
-          <div className="modal-footer">
-            <button type="button" className="btn btn-ghost" onClick={handleCloseModal}>Cancelar</button>
-            <button type="submit" className="btn btn-primary" disabled={loading}>
+          <div className={modalStyles.modalFooter}>
+            <button type="button" className={`${styles.btn} ${styles.btnGhost}`} onClick={handleCloseModal}>Cancelar</button>
+            <button type="submit" className={`${styles.btn} ${styles.btnPrimary}`} disabled={loading}>
               {loading ? 'Guardando...' : 'Guardar'}
             </button>
           </div>
@@ -160,9 +164,9 @@ export const AuthorsList = () => {
       {/* Delete Confirmation Modal */}
       <Modal isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)} title="Confirmar Eliminación">
         <p>¿Estás seguro que deseas eliminar a {authorToDelete?.name}? Esta acción no se puede deshacer.</p>
-        <div className="modal-footer">
-          <button className="btn btn-ghost" onClick={() => setIsDeleteModalOpen(false)}>Cancelar</button>
-          <button className="btn btn-danger" onClick={confirmDelete} disabled={loading}>
+        <div className={modalStyles.modalFooter}>
+          <button className={`${styles.btn} ${styles.btnGhost}`} onClick={() => setIsDeleteModalOpen(false)}>Cancelar</button>
+          <button className={`${styles.btn} ${styles.btnDanger}`} onClick={confirmDelete} disabled={loading}>
             {loading ? 'Eliminando...' : 'Eliminar'}
           </button>
         </div>

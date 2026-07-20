@@ -1,20 +1,23 @@
 import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useBookStore } from '../../store/useBookStore';
-import { Plus, Edit2, Trash2 } from 'lucide-react';
+import { Plus, Edit2, Trash2, Eye } from 'lucide-react';
 import { Modal } from '../../components/ui/Modal';
+import modalStyles from '../../components/ui/Modal.module.css';
+import styles from '../shared/PageStyles.module.css';
 import type { Book } from '../../types/Book';
 import toast from 'react-hot-toast';
 
 export const BooksList = () => {
   const { books, loading, fetchBooks, createBook, updateBook, deleteBook } = useBookStore();
+  const navigate = useNavigate();
   
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [editingBook, setEditingBook] = useState<Book | null>(null);
   const [bookToDelete, setBookToDelete] = useState<Book | null>(null);
 
-  // Form State
   const [formData, setFormData] = useState({ isbn: '', title: '', price: 0 });
 
   useEffect(() => {
@@ -50,7 +53,6 @@ export const BooksList = () => {
       }
       handleCloseModal();
     } catch (error) {
-      // Error manejado
     }
   };
 
@@ -61,31 +63,30 @@ export const BooksList = () => {
         toast.success('Libro eliminado con éxito');
         setIsDeleteModalOpen(false);
       } catch (error) {
-        // Error manejado
       }
     }
   };
 
   if (loading && books.length === 0) {
     return (
-      <div className="spinner-wrapper">
-        <div className="spinner"></div>
+      <div className={styles.spinnerWrapper}>
+        <div className={styles.spinner}></div>
       </div>
     );
   }
 
   return (
     <div>
-      <div className="page-header">
-        <h1 className="page-title">Libros</h1>
-        <button className="btn btn-primary" onClick={() => handleOpenModal()}>
+      <div className={styles.pageHeader}>
+        <h1 className={styles.pageTitle}>Libros</h1>
+        <button className={`${styles.btn} ${styles.btnPrimary}`} onClick={() => handleOpenModal()}>
           <Plus size={18} /> Añadir Libro
         </button>
       </div>
 
-      <div className="card">
-        <div className="table-wrapper">
-          <table className="table">
+      <div className={styles.card}>
+        <div className={styles.tableWrapper}>
+          <table className={styles.table}>
             <thead>
               <tr>
                 <th>ISBN</th>
@@ -103,12 +104,15 @@ export const BooksList = () => {
                   <td>${book.price}</td>
                   <td>{book.authors?.map(a => a.name).join(', ') || '-'}</td>
                   <td>
-                    <div className="actions">
-                      <button className="btn btn-ghost" onClick={() => handleOpenModal(book)}>
+                    <div className={styles.actions}>
+                      <button className={`${styles.btn} ${styles.btnGhost}`} onClick={() => navigate(`/books/${book.isbn}`)}>
+                        <Eye size={16} />
+                      </button>
+                      <button className={`${styles.btn} ${styles.btnGhost}`} onClick={() => handleOpenModal(book)}>
                         <Edit2 size={16} />
                       </button>
                       <button 
-                        className="btn btn-ghost" 
+                        className={`${styles.btn} ${styles.btnGhost}`}
                         style={{ color: 'var(--danger)' }}
                         onClick={() => {
                           setBookToDelete(book);
@@ -133,54 +137,52 @@ export const BooksList = () => {
         </div>
       </div>
 
-      {/* Create / Edit Modal */}
       <Modal isOpen={isModalOpen} onClose={handleCloseModal} title={editingBook ? 'Editar Libro' : 'Nuevo Libro'}>
         <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label className="form-label">ISBN</label>
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>ISBN</label>
             <input 
               required
-              className="form-input"
+              className={styles.formInput}
               value={formData.isbn}
               onChange={(e) => setFormData({...formData, isbn: e.target.value})}
               disabled={!!editingBook}
             />
           </div>
-          <div className="form-group">
-            <label className="form-label">Título</label>
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>Título</label>
             <input 
               required
-              className="form-input"
+              className={styles.formInput}
               value={formData.title}
               onChange={(e) => setFormData({...formData, title: e.target.value})}
             />
           </div>
-          <div className="form-group">
-            <label className="form-label">Precio</label>
+          <div className={styles.formGroup}>
+            <label className={styles.formLabel}>Precio</label>
             <input 
               required
               type="number"
               step="0.01"
-              className="form-input"
+              className={styles.formInput}
               value={formData.price}
               onChange={(e) => setFormData({...formData, price: parseFloat(e.target.value) || 0})}
             />
           </div>
-          <div className="modal-footer">
-            <button type="button" className="btn btn-ghost" onClick={handleCloseModal}>Cancelar</button>
-            <button type="submit" className="btn btn-primary" disabled={loading}>
+          <div className={modalStyles.modalFooter}>
+            <button type="button" className={`${styles.btn} ${styles.btnGhost}`} onClick={handleCloseModal}>Cancelar</button>
+            <button type="submit" className={`${styles.btn} ${styles.btnPrimary}`} disabled={loading}>
               {loading ? 'Guardando...' : 'Guardar'}
             </button>
           </div>
         </form>
       </Modal>
 
-      {/* Delete Confirmation Modal */}
       <Modal isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)} title="Confirmar Eliminación">
         <p>¿Estás seguro que deseas eliminar el libro "{bookToDelete?.title}"? Esta acción no se puede deshacer.</p>
-        <div className="modal-footer">
-          <button className="btn btn-ghost" onClick={() => setIsDeleteModalOpen(false)}>Cancelar</button>
-          <button className="btn btn-danger" onClick={confirmDelete} disabled={loading}>
+        <div className={modalStyles.modalFooter}>
+          <button className={`${styles.btn} ${styles.btnGhost}`} onClick={() => setIsDeleteModalOpen(false)}>Cancelar</button>
+          <button className={`${styles.btn} ${styles.btnDanger}`} onClick={confirmDelete} disabled={loading}>
             {loading ? 'Eliminando...' : 'Eliminar'}
           </button>
         </div>

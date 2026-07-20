@@ -1,25 +1,26 @@
 import { NavLink, Outlet } from 'react-router-dom';
 import { LayoutDashboard, Users, BookOpen, UserCircle } from 'lucide-react';
 import { Toaster } from 'react-hot-toast';
+import styles from './Layout.module.css';
 
 const Sidebar = () => {
   return (
-    <aside className="sidebar">
-      <div className="sidebar-brand">
+    <aside className={styles.sidebar}>
+      <div className={styles.sidebarBrand}>
         <LayoutDashboard size={28} />
         <span>Admin Pro</span>
       </div>
-      <nav className="sidebar-nav">
-        <NavLink to="/" className={({isActive}) => isActive ? "nav-item active" : "nav-item"} end>
+      <nav className={styles.sidebarNav}>
+        <NavLink to="/" className={({isActive}) => isActive ? `${styles.navItem} ${styles.active}` : styles.navItem} end>
           <LayoutDashboard size={20} /> Inicio
         </NavLink>
-        <NavLink to="/authors" className={({isActive}) => isActive ? "nav-item active" : "nav-item"}>
+        <NavLink to="/authors" className={({isActive}) => isActive ? `${styles.navItem} ${styles.active}` : styles.navItem}>
           <UserCircle size={20} /> Autores
         </NavLink>
-        <NavLink to="/books" className={({isActive}) => isActive ? "nav-item active" : "nav-item"}>
+        <NavLink to="/books" className={({isActive}) => isActive ? `${styles.navItem} ${styles.active}` : styles.navItem}>
           <BookOpen size={20} /> Libros
         </NavLink>
-        <NavLink to="/customers" className={({isActive}) => isActive ? "nav-item active" : "nav-item"}>
+        <NavLink to="/customers" className={({isActive}) => isActive ? `${styles.navItem} ${styles.active}` : styles.navItem}>
           <Users size={20} /> Clientes
         </NavLink>
       </nav>
@@ -29,7 +30,7 @@ const Sidebar = () => {
 
 export const Layout = () => {
   return (
-    <div className="app-layout">
+    <div className={styles.appLayout}>
       <Toaster 
         position="top-right" 
         toastOptions={{
@@ -43,7 +44,7 @@ export const Layout = () => {
         }} 
       />
       <Sidebar />
-      <main className="main-content">
+      <main className={styles.mainContent}>
         <Outlet />
       </main>
     </div>
