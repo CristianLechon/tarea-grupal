@@ -2,9 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app-customers
-  #namespace: books-app
+  namespace: books-app
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: app-customers
@@ -15,9 +15,21 @@ spec:
     spec:
       containers:
         - name: app-customers
-          image: xd456/app-customers:latest
+          image: vinic/app-customers:latest
           ports:
             - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 10
           env:
             - name: SPRING_DATASOURCE_URL
               valueFrom:
@@ -49,11 +61,6 @@ spec:
                 configMapKeyRef:
                   name: books-config
                   key: CONSUL_PORT
-            - name: OTLP_ENDPOINT
-              valueFrom:
-                configMapKeyRef:
-                  name: books-config
-                  key: OTLP_ENDPOINT
           resources:
             requests:
               memory: "512Mi"
@@ -63,7 +70,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: app-customers
-  #namespace: books-app
+  namespace: books-app
 spec:
   type: ClusterIP
   selector:
@@ -71,4 +78,3 @@ spec:
   ports:
     - port: 8080
       targetPort: 8080
-      

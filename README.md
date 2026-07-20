@@ -8,8 +8,8 @@ A continuación, el Grupo 6 presenta un proyecto multi-módulo que implementa un
 
 | Nombre Completo | Cédula |
 |---|---|
-| [Nombre del Integrante 1] | [Cédula 1] |
-| [Nombre del Integrante 2] | [Cédula 2] |
+| Cristian Alexander Lechon Lechon | 1726696063 |
+| Angelo Fabricio Pujota Pineda | 1726616541 |
 | Edgar Vinicio Tipán López | 1727326421 |
 
 ---

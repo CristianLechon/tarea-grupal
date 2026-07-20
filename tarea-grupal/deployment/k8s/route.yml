@@ -1,0 +1,30 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: traefik-route
+  namespace: books-app
+spec:
+  to:
+    kind: Service
+    name: traefik
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: app-web-route
+  namespace: books-app
+spec:
+  to:
+    kind: Service
+    name: app-web
+    weight: 100
+  port:
+    targetPort: 80
+  tls:
+    termination: edge
+

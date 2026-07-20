@@ -2,9 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: app-books
-  #namespace: books-app
+  namespace: books-app
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: app-books
@@ -15,9 +15,21 @@ spec:
     spec:
       containers:
         - name: app-books
-          image: xd456/app-books:latest
+          image: vinic/app-books:latest
           ports:
             - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /q/health/live
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /q/health/ready
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 10
           env:
             - name: QUARKUS_DATASOURCE_JDBC_URL
               valueFrom:
@@ -49,11 +61,6 @@ spec:
                 configMapKeyRef:
                   name: books-config
                   key: CONSUL_PORT
-            - name: OTLP_ENDPOINT
-              valueFrom:
-                configMapKeyRef:
-                  name: books-config
-                  key: OTLP_ENDPOINT
           resources:
             requests:
               memory: "512Mi"
@@ -63,7 +70,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: app-books
-  #namespace: books-app
+  namespace: books-app
 spec:
   type: ClusterIP
   selector:
@@ -71,6 +78,3 @@ spec:
   ports:
     - port: 8080
       targetPort: 8080
-
-
-      
